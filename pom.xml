@@ -84,10 +84,10 @@
                 <activeByDefault>true</activeByDefault>
             </activation>
             <properties>
-              <properties>
                 <maven.compiler.source>17</maven.compiler.source>
               <maven.compiler.target>17</maven.compiler.target>
          </properties>
+           <properties>
 
                 <!-- Optional URL to server. Default value is http://localhost:9000 -->
                 <sonar.host.url>
