@@ -91,7 +91,7 @@
     <maven.compiler.source>17</maven.compiler.source>
     <maven.compiler.target>17</maven.compiler.target>
     <!-- Optional URL to server. Default value is http://localhost:9000 -->
-    <sonar.host.url>http://http://10.50.50.7:9000/</sonar.host.url>
+    <sonar.host.url>http://airflow.apspdcl.in:8090//</sonar.host.url>
 </properties>
 
         </profile>
