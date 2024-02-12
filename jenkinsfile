@@ -6,7 +6,7 @@
             agent any
             steps {
               withSonarQubeEnv('LocalSonarqube') {
-                sh 'mvn clean package -X sonar:sonar'
+                sh 'mvn clean package -X -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 sonar:sonar'
               }
             }
           }
