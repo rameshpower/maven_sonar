@@ -28,7 +28,7 @@
     <dependency>
         <groupId>groupId-of-the-dependency</groupId>
         <artifactId>dependency-artifact</artifactId>
-        <version><!-- specify version here --></version>
+            <version>1.0.0</version>   
         <exclusions>
             <exclusion>
                 <groupId>org.slf4j</groupId>
