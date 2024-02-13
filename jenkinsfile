@@ -1,28 +1,25 @@
 pipeline {
     agent any
+    
     tools {
-        jdk 'jdk'
-        maven 'maven'
+        // Use alternative names for JDK and Maven installations
+        jdk 'JAVA8' // Assuming 'JAVA8' is configured in Jenkins
+        maven 'maven3.6.3' // Assuming 'maven3.6.3' is configured in Jenkins
     }
-    environment {
-        PATH = "$PATH:/usr/share/maven/bin"
-        SCANNER_HOME = tool 'sonar-server'
-    }
+
     stages {
-        stage('Workspace Cleaning') {
+        stage('Build') {
             steps {
-                cleanWs()
+                sh 'mvn clean package'
             }
         }
-        stage('Checkout from Git') {
+
+        stage('SonarQube Analysis') {
             steps {
-                git branch: 'master', url: 'https://github.com/rameshpower/hello-world.git'
-            }
-        }
-        stage("Sonarqube Analysis") {
-            steps {
-                withSonarQubeEnv('LocalSonarqube') {
-                    sh "mvn sonar:sonar"
+                script {
+                    withSonarQubeEnv('LocalSonarqube') {
+                        sh 'mvn sonar:sonar'
+                    }
                 }
             }
         }
