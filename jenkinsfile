@@ -1,25 +1,30 @@
-     pipeline {
+  
+pipeline{
     agent any
-    
+    tools{
+        jdk 'jdk'
+        mvn 'mvn'
+    }
     environment {
-        MAVEN_HOME = tool 'Maven'
+         PATH = "$PATH:/usr/share/maven/bin"
+        SCANNER_HOME=tool 'sonar-server'
     }
-
     stages {
-        stage('Build') {
-            steps {
-                script {
-                    sh '${MAVEN_HOME}/bin/mvn clean package'
-                }
+        stage('Workspace Cleaning'){
+            steps{
+                cleanWs()
             }
         }
-
-        stage('SonarQube Analysis') {
-            steps {
+        stage('Checkout from Git'){
+            steps{
+                git branch: 'master', url: 'https://github.com/rameshpower/hello-world.git'
+            }
+        }
+        stage("Sonarqube Analysis"){
+            steps{
                 withSonarQubeEnv('LocalSonarqube') {
-                    sh '${MAVEN_HOME}/bin/mvn sonar:sonar'
-                }
+                sh "mvn sonar:sonar"
+
             }
         }
-    }
 }
