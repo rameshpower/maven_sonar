@@ -3,12 +3,6 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-   <repositories>
-        <repository>
-            <id>sonarsource-releases</id>
-            <url>https://repox.sonarsource.com/sonarsource-public-otr-release</url>
-        </repository>
-    </repositories>
 
   <groupId>com.devopshint.app</groupId>
   <artifactId>devops-app</artifactId>
@@ -24,26 +18,23 @@
     <maven.compiler.target>1.7</maven.compiler.target>
   </properties>
   
- <dependencies>
+  <dependencies>
     <dependency>
-        <groupId>junit</groupId>
-        <artifactId>junit</artifactId>
-        <version>4.11</version>
-        <scope>test</scope>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.11</version>
+      <scope>test</scope>
     </dependency>
-    
- <build>
-    <plugins>
+  </dependencies>
+
+  <build>
+    <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
+      <plugins>
         <!-- clean lifecycle, see https://maven.apache.org/ref/current/maven-core/lifecycles.html#clean_Lifecycle -->
         <plugin>
-            <groupId>org.codehaus.sonar</groupId>
-            <artifactId>sonar-maven-plugin</artifactId>
-            <version>3.9.1.2184</version>
+          <artifactId>maven-clean-plugin</artifactId>
+          <version>3.1.0</version>
         </plugin>
-    </plugins>
-  </build>
-    <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
-   
         <!-- default lifecycle, jar packaging: see https://maven.apache.org/ref/current/maven-core/default-bindings.html#Plugin_bindings_for_jar_packaging -->
         <plugin>
           <artifactId>maven-resources-plugin</artifactId>
@@ -81,7 +72,7 @@
         <plugin>
           <groupId>org.sonarsource.scanner.maven</groupId>
           <artifactId>sonar-maven-plugin</artifactId>
-        <version>3.7.0.1746</version>
+          <version>3.7.0.1746</version>
         </plugin>
       </plugins>
     </pluginManagement>
