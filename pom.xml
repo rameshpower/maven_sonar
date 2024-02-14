@@ -25,12 +25,7 @@
     </dependency>
 
   
-<!-- https://mvnrepository.com/artifact/org.sonarsource.scanner.maven/sonar-maven-plugin -->
-<dependency>
-    <groupId>org.sonarsource.scanner.maven</groupId>
-    <artifactId>sonar-maven-plugin</artifactId>
-    <version>3.4.0.905</version>
-</dependency>
+
 
     
   </dependencies>
@@ -78,13 +73,12 @@
           <version>3.0.0</version>
         </plugin>
         <!-- SonarQube Scanner Plugin -->
-<!--         <plugin>
-            
-    <groupId>org.sonarsource.scanner.maven</groupId>
-          <artifactId>sonar-maven-plugin</artifactId>
-           <version>3.0.2</version>
-          
-    </plugin>     -->
+         <plugin>
+                <groupId>org.sonarsource.scanner.maven</groupId>
+                <artifactId>sonar-maven-plugin</artifactId>
+                <version>3.4.0.905</version>
+            </plugin>
+
 
 
         
