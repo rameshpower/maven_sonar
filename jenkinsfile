@@ -2,6 +2,12 @@ pipeline {
     agent any
     
     stages {
+        stage('Workspace Cleaning') {
+            steps {
+                cleanWs() // Clean up the workspace
+            }
+        }
+        
         stage('Build') {
             steps {
                 sh 'mvn clean package' // Maven will automatically use pom.xml in the current directory
@@ -32,3 +38,4 @@ pipeline {
         }
     }
 }
+
