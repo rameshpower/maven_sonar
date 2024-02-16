@@ -1,16 +1,9 @@
 pipeline {
     agent any
     
-    tools {
-        jdk 'JAVA8' // Assuming 'JAVA8' is configured in Jenkins
-        maven 'maven3.6.3' // Assuming 'maven3.6.3' is configured in Jenkins
-    }
-    
-
-
+    stages {
         stage('Build') {
             steps {
-                // No need to specify the directory if the pom.xml is in the root directory
                 sh 'mvn clean package' // Maven will automatically use pom.xml in the current directory
             }
         }
@@ -27,7 +20,7 @@ pipeline {
 
         stage("Quality Gate") {
             steps {
-                timeout(time: 10, unit: 'SECONDS') {
+                timeout(time: 10, unit: 'MINUTES') { // Adjust timeout period as needed
                     script {
                         def qg = waitForQualityGate()
                         if (qg.status != 'OK') {
@@ -38,4 +31,4 @@ pipeline {
             }
         }
     }
-
+}
