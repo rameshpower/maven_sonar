@@ -6,12 +6,7 @@ pipeline {
         maven 'maven3.6.3' // Assuming 'maven3.6.3' is configured in Jenkins
     }
     
-    stages {
-        stage('Workspace Cleaning') {
-            steps {
-                cleanWs()
-            }
-        }
+
 
         stage('Build') {
             steps {
