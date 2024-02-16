@@ -15,10 +15,8 @@ pipeline {
 
         stage('Build') {
             steps {
-                dir('/var/lib/jenkins/workspace/sonarqube/sonarqube-pipeline') {
-                    // Correct path to pom.xml
-                    sh 'mvn clean package' // Maven will automatically use pom.xml in the current directory
-                }
+                // No need to specify the directory if the pom.xml is in the root directory
+                sh 'mvn clean package' // Maven will automatically use pom.xml in the current directory
             }
         }
 
