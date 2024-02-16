@@ -15,7 +15,10 @@ pipeline {
 
         stage('Build') {
             steps {
-                sh 'mvn clean package'
+                // Move dir directive inside the steps block of the stage
+                dir('/var/lib/jenkins/workspace/sonarqube-pipeline') {
+                    sh 'mvn clean package'
+                }
             }
         }
 
