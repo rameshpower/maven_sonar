@@ -1,24 +1,33 @@
 pipeline {
     agent any
     
+    tools {
+        // Use alternative names for JDK and Maven installations
+        jdk 'JAVA8' // Assuming 'JAVA8' is configured in Jenkins
+        maven 'maven3.6.3' // Assuming 'maven3.6.3' is configured in Jenkins
+    }
     stages {
         stage('Workspace Cleaning') {
             steps {
-                cleanWs() // Clean up the workspace
+                cleanWs()
             }
         }
-        
+
         stage('Build') {
             steps {
-                sh 'mvn clean package' // Maven will automatically use pom.xml in the current directory
+                dir('/var/lib/jenkins/workspace/sonarqube/sonarqube-pipeline') {
+                    sh 'mvn clean package'
+                }
             }
         }
 
         stage('SonarQube Analysis') {
             steps {
-                script {
-                    withSonarQubeEnv('LocalSonarqube') {
-                        sh 'mvn -X sonar:sonar'
+                dir('/var/lib/jenkins/workspace/sonarqube/sonarqube-pipeline') {
+                    script {
+                        withSonarQubeEnv('LocalSonarqube') {
+                            sh 'mvn -X sonar:sonar'
+                        }
                     }
                 }
             }
@@ -26,9 +35,9 @@ pipeline {
 
         stage("Quality Gate") {
             steps {
-                timeout(time: 10, unit: 'MINUTES') { // Adjust timeout period as needed
+                timeout(time: 10, unit: 'SECONDS') { // Just in case something goes wrong, pipeline will be killed after a timeout
                     script {
-                        def qg = waitForQualityGate()
+                        def qg = waitForQualityGate() // Reuse taskId previously collected by withSonarQubeEnv
                         if (qg.status != 'OK') {
                             error "Pipeline aborted due to quality gate failure: ${qg.status}"
                         }
@@ -38,4 +47,3 @@ pipeline {
         }
     }
 }
-
