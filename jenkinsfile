@@ -28,13 +28,16 @@ pipeline {
             }
         }
 
-        stage("Quality Gate") {
+        stage('Quality Gate') {
             steps {
-                script {
-                    // Use 'waitForQualityGate' to wait for the quality gate status
-                    // 'abortPipeline: false' will prevent the pipeline from aborting even if the quality gate fails
-                    // 'credentialsId' should refer to the Jenkins credentials containing the SonarQube token
-                    waitForQualityGate abortPipeline: false, credentialsId: 'sonar-token'
+                timeout(time: 1, unit: 'MINUTES') {
+                    script {
+                        def qg = waitForQualityGate()
+                        println "Finished waiting"
+                        if (qg.status != 'OK') {
+                            error "Pipeline aborted due to quality gate failure: ${qg.status}"
+                        }
+                    }
                 }
             }
         }
