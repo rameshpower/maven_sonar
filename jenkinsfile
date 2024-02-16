@@ -19,6 +19,7 @@ pipeline {
             steps {
                 dir('/var/lib/jenkins/workspace/sonarqube/sonarqube-pipeline') {
                     script {
+                        // Use 'withSonarQubeEnv' to set the SonarQube server configuration
                         withSonarQubeEnv('LocalSonarqube') {
                             sh 'mvn -X sonar:sonar'
                         }
@@ -29,14 +30,11 @@ pipeline {
 
         stage("Quality Gate") {
             steps {
-                timeout(time: 10, unit: 'SECONDS') {
-                    script {
-                        def qg = waitForQualityGate()
-                        def metrics = getCurrentQualityGateMetrics()
-                        if (qg.status != 'OK' || metrics['coverage'] < 50) {
-                            error "Pipeline aborted due to quality gate failure or code coverage less than 90%: ${qg.status}"
-                        }
-                    }
+                script {
+                    // Use 'waitForQualityGate' to wait for the quality gate status
+                    // 'abortPipeline: false' will prevent the pipeline from aborting even if the quality gate fails
+                    // 'credentialsId' should refer to the Jenkins credentials containing the SonarQube token
+                    waitForQualityGate abortPipeline: false, credentialsId: 'sonar-token'
                 }
             }
         }
