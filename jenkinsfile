@@ -6,7 +6,12 @@ pipeline {
         jdk 'JAVA8' // Assuming 'JAVA8' is configured in Jenkins
         maven 'maven3.6.3' // Assuming 'maven3.6.3' is configured in Jenkins
     }
-
+    stages {
+        stage('Workspace Cleaning'){
+            steps{
+                cleanWs()
+            }
+        }
     stages {
         stage('Build') {
             steps {
